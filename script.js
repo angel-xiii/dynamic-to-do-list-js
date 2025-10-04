@@ -6,6 +6,19 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const addButton = document.getElementById('add-task-btn');
 
+    function loadTasks() {
+        const storedTasks = JSON.parse(localStorage.getItem('tasks') || '[]');
+        storedTasks.forEach(taskText => addTask(taskText, false));
+    }
+
+    function saveTasks() {
+        const tasks = [];
+        document.querySelectorAll('#task-list li').forEach(li => {
+            tasks.push(li.firstChild.textContent);
+        });
+        localStorage.setItem('tasks', JSON.stringify(tasks));
+    }
+    
     function addTask() {
         const taskText = taskInput.value.trim();
 
